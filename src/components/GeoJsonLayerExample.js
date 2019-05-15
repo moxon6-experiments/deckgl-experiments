@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {StaticMap} from 'react-map-gl';
 import DeckGL, {GeoJsonLayer} from 'deck.gl';
 import {scaleThreshold} from 'd3-scale';
 

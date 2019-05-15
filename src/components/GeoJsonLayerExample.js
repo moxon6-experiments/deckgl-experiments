@@ -7,8 +7,7 @@ import {scaleThreshold} from 'd3-scale';
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 // Source data GeoJSON
-const DATA_URL =
-  'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/geojson/vancouver-blocks.json'; // eslint-disable-line
+const DATA_URL = 'data/uk-vlow.geo.json'; // eslint-disable-line
 
 export const COLOR_SCALE = scaleThreshold()
   .domain([-0.6, -0.45, -0.3, -0.15, 0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2])
@@ -30,8 +29,8 @@ export const COLOR_SCALE = scaleThreshold()
   ]);
 
 export const INITIAL_VIEW_STATE = {
-  latitude: 49.254,
-  longitude: -123.13,
+  latitude: 55,
+  longitude: -3.43,
   zoom: 11,
   maxZoom: 16,
   pitch: 45,
@@ -62,8 +61,7 @@ export class App extends Component {
         extruded: true,
         wireframe: true,
         fp64: true,
-        getElevation: f => Math.sqrt(f.properties.valuePerSqm) * 10,
-        getFillColor: f => COLOR_SCALE(f.properties.growth),
+        getFillColor: f => COLOR_SCALE(0),
         getLineColor: [255, 255, 255],
         pickable: true,
       })
@@ -71,7 +69,7 @@ export class App extends Component {
   }
 
   render() {
-    const {viewState, controller = true, baseMap = true} = this.props;
+    const {viewState, controller = true } = this.props;
 
     return (
       <DeckGL

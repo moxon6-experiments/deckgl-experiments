@@ -171,7 +171,6 @@ export class App extends Component {
 
   render() {
     const {viewState, controller = true, baseMap = true} = this.props;
-
     return (
       <DeckGL
         layers={this._renderLayers()}
@@ -180,14 +179,6 @@ export class App extends Component {
         viewState={viewState}
         controller={controller}
       >
-        {baseMap && (
-          <StaticMap
-            reuseMaps
-            mapStyle="mapbox://styles/mapbox/dark-v9"
-            preventStyleDiffing={true}
-            mapboxApiAccessToken={MAPBOX_TOKEN}
-          />
-        )}
       </DeckGL>
     );
   }

@@ -1,6 +1,5 @@
 /* global window */
 import React, {Component} from 'react';
-import {StaticMap} from 'react-map-gl';
 import {PhongMaterial} from '@luma.gl/core';
 import {AmbientLight, PointLight, LightingEffect} from '@deck.gl/core';
 import {HexagonLayer} from '@deck.gl/aggregation-layers';
@@ -9,12 +8,15 @@ import {GeoJsonLayer} from 'deck.gl';
 import {scaleOrdinal} from 'd3-scale';
 import {schemeCategory10} from 'd3-scale-chromatic'
 import { rgb } from 'd3-color'
+import {IconLayer} from 'deck.gl';
 
 const COLOR_SCALE = scaleOrdinal(schemeCategory10);
 
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 const DATA_URL_GEO = 'data/uk-vlow.geo.json'; // eslint-disable-line
+const DATA_URL_ICONS =
+  'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/icon/meteorites.json'; // eslint-disable-line
 
 // Source data CSV
 const DATA_URL =
@@ -125,7 +127,21 @@ export class App extends Component {
   }
 
   _renderLayers() {
-    const {data, radius = 5000, upperPercentile = 100, coverage = 0.7} = this.props;
+    const {data, radius = 5000, upperPercentile = 100, coverage = 0.7, viewState} = this.props;
+    
+    const layerProps = {
+      data: DATA_URL_ICONS,
+      pickable: true,
+      wrapLongitude: true,
+      getPosition: d => d.coordinates,
+      iconAtlas:  'data/location-icon-atlas.png',
+      iconMapping: 'data/location-icon-mapping.json',
+      onHover: this._onHover,
+      onClick: this._onClick,
+      sizeScale: 60
+    };
+
+    const size = viewState ? Math.min(Math.pow(1.5, viewState.zoom - 10), 1) : 1;
 
     return [
       new GeoJsonLayer({
@@ -134,7 +150,7 @@ export class App extends Component {
         opacity: 0.8,
         stroked: true,
         filled: true,
-        extruded: true,
+        extruded: false,
         wireframe: true,
         fp64: true,
         getFillColor: f => {
@@ -148,21 +164,13 @@ export class App extends Component {
         getLineColor: [255, 255, 255],
         pickable: true,
       }),
-      new HexagonLayer({
-        id: 'heatmap',
-        colorRange,
-        coverage,
-        data,
-        elevationRange: [100, 3000],
-        elevationScale: this.state.elevationScale,
-        extruded: true,
-        getPosition: d => d,
-        onHover: this.props.onHover,
-        opacity: 1,
-        pickable: Boolean(this.props.onHover),
-        radius,
-        upperPercentile,
-        material
+
+      new IconLayer({
+          ...layerProps,
+          id: 'icon',
+          getIcon: d => 'marker',
+          getSize: size,
+          elevationRange: [100, 3000],
       })
     ];
   }
@@ -194,6 +202,7 @@ class BaseExample extends React.Component {
         this.setState({ data })
       }
     });
+
   }
 
   render() {

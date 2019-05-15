@@ -8,6 +8,7 @@ import { Button, Welcome } from '@storybook/react/demo';
 import HexagonLayerExample from '../components/HexagonLayerExample'
 import GeoJsonLayerExample from '../components/GeoJsonLayerExample'
 import HexagonGeoJSON from '../components/HexagonGeoJSON'
+import IconLayerExample from '../components/IconLayerExample'
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -25,3 +26,4 @@ storiesOf('Button', module)
     .add('Hexagon Layer Example', HexagonLayerExample)
     .add('GeoJson Layer Example', GeoJsonLayerExample)
     .add('Hexagon GeoJson Layer Example', HexagonGeoJSON)
+    .add('Icon Layer Example', IconLayerExample)

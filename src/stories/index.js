@@ -9,6 +9,7 @@ import HexagonLayerExample from '../components/HexagonLayerExample'
 import GeoJsonLayerExample from '../components/GeoJsonLayerExample'
 import HexagonGeoJSON from '../components/HexagonGeoJSON'
 import IconLayerExample from '../components/IconLayerExample'
+import IconLayerBase from '../components/IconLayerBase'
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -27,3 +28,4 @@ storiesOf('Button', module)
     .add('GeoJson Layer Example', GeoJsonLayerExample)
     .add('Hexagon GeoJson Layer Example', HexagonGeoJSON)
     .add('Icon Layer Example', IconLayerExample)
+    .add('Icon Layer Base', IconLayerBase)

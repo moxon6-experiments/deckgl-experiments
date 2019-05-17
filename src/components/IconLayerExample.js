@@ -9,9 +9,12 @@ import {scaleOrdinal} from 'd3-scale';
 import {schemeCategory10} from 'd3-scale-chromatic'
 import { rgb } from 'd3-color'
 import {IconLayer} from 'deck.gl';
+import IconLayerExample from './IconLayerExample.css'
 
 const COLOR_SCALE = scaleOrdinal(schemeCategory10);
-
+const ICON_MAPPING = {
+  marker: {x: 0, y: 0, width: 32, height: 32, mask: true}
+};
 // Set your mapbox token here
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 const DATA_URL_GEO = 'data/uk-vlow.geo.json'; // eslint-disable-line
@@ -133,12 +136,12 @@ export class App extends Component {
       data: DATA_URL_ICONS,
       pickable: true,
       wrapLongitude: true,
-      getPosition: d => d.coordinates,
-      iconAtlas:  'data/location-icon-atlas.png',
-      iconMapping: 'data/location-icon-mapping.json',
+      iconAtlas:  'data/icon-atlas.png',
+      iconMapping: ICON_MAPPING,
       onHover: this._onHover,
       onClick: this._onClick,
-      sizeScale: 60
+      sizeScale: 60,
+      getPosition: d => d.coordinates
     };
 
     const size = viewState ? Math.min(Math.pow(1.5, viewState.zoom - 10), 1) : 1;
@@ -176,6 +179,7 @@ export class App extends Component {
   }
 
   render() {
+    debugger
     const {viewState, controller = true, baseMap = true} = this.props;
     return (
       <DeckGL

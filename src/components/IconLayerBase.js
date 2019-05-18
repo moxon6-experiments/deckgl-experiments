@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import {render} from 'react-dom';
 import {StaticMap} from 'react-map-gl';
 import DeckGL, {IconLayer} from 'deck.gl';
 
 import IconClusterLayer from './icon-cluster-layer';
 
 // Set your mapbox token here
-const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+const MAPBOX_TOKEN = "pk.eyJ1IjoibW94b242IiwiYSI6ImNqdmt0YW5uazBsZmE0Y29mYjA1djlzZGMifQ.eTHWIdnhypIUq7ywK095fw"; // eslint-disable-line
 
 // Source data CSV
 const DATA_URL =
@@ -178,4 +179,4 @@ export class App extends Component {
   }
 }
 
-export default () => <App />;
+export default () => <App showCluster/>
